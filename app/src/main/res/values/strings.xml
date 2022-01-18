@@ -1,0 +1,15 @@
+<resources>
+    <string name="app_name">Travel VN</string>
+
+    <string name="nav_home">Home</string>
+    <string name="nav_travel">Travel VietNam</string>
+    <string name="nav_favorite">Favorite</string>
+    <string name="nav_manage">Manage</string>
+    <string name="nav_account">Account</string>
+    <string name="nav_my_profile">My Profile</string>
+    <string name="nav_change_password">Change Password</string>
+    <string name="nav_logout">Logout</string>
+
+    <string name="navigation_drawer_open">Travel VN</string>
+    <string name="navigation_drawer_close">Travel</string>
+</resources>

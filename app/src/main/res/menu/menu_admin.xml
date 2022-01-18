@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item android:id="@+id/action_re"
+        android:title="Add new location"
+        android:icon="@drawable/ic_refresh"
+        app:showAsAction="always" />
+
+    <item android:id="@+id/action_add"
+        android:title="Add new location"
+        android:icon="@drawable/ic_add"
+        app:showAsAction="always" />
+
+    <item android:id="@+id/action_searcha"
+        android:title="Search"
+        android:icon="@drawable/ic_search"
+        app:showAsAction="always"
+        app:actionViewClass="androidx.appcompat.widget.SearchView"/>
+
+</menu>
