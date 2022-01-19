@@ -19,10 +19,21 @@
             android:name=".AddLocationActivity"
             android:exported="false" />
         <activity
+            android:name=".AddCuisineActivity"
+            android:exported="false" />
+        <activity
             android:name=".EditLocationActivity"
             android:exported="false" />
         <activity
+            android:name=".EditCuisineActivity"
+            android:exported="false" />
+        <activity
             android:name=".QlLocationActivity"
+            android:exported="false"
+            android:parentActivityName=".MainActivity">
+        </activity>
+        <activity
+            android:name=".QlCuisineActivity"
             android:exported="false"
             android:parentActivityName=".MainActivity">
         </activity>
@@ -32,17 +43,16 @@
             android:parentActivityName=".MainActivity"/>
         <activity
             android:name=".Regions"
-            android:exported="true"
+            android:exported="false"
             android:parentActivityName=".MainActivity"/>
         <activity
             android:name=".DetailActivity"
-            android:exported="true" />
+            android:exported="false" />
         <activity
             android:name=".IntroductoryActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>

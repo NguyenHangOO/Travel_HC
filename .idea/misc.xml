@@ -5,6 +5,7 @@
       <map>
         <entry key="..\:/AndroidProject/Travel/app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.14427083333333332" />
         <entry key="..\:/AndroidProject/Travel/app/src/main/res/drawable/bg_indicator3.xml" value="0.1" />
+        <entry key="..\:/AndroidProject/Travel/app/src/main/res/drawable/bg_yellow.xml" value="0.26614583333333336" />
         <entry key="..\:/AndroidProject/Travel/app/src/main/res/drawable/button_bg.xml" value="0.1" />
         <entry key="..\:/AndroidProject/Travel/app/src/main/res/drawable/button_bg_bule.xml" value="0.26614583333333336" />
         <entry key="..\:/AndroidProject/Travel/app/src/main/res/drawable/button_bg_red.xml" value="0.26614583333333336" />
@@ -15,13 +16,16 @@
         <entry key="..\:/AndroidProject/Travel/app/src/main/res/drawable/ic_logo_background.xml" value="0.14427083333333332" />
         <entry key="..\:/AndroidProject/Travel/app/src/main/res/drawable/ic_search.xml" value="0.1" />
         <entry key="..\:/AndroidProject/Travel/app/src/main/res/drawable/vie_bg.xml" value="0.1" />
-        <entry key="..\:/AndroidProject/Travel/app/src/main/res/layout/activity_add_location.xml" value="0.23143115942028986" />
+        <entry key="..\:/AndroidProject/Travel/app/src/main/res/layout/activity_add_cuisine.xml" value="0.4" />
+        <entry key="..\:/AndroidProject/Travel/app/src/main/res/layout/activity_add_location.xml" value="0.2" />
         <entry key="..\:/AndroidProject/Travel/app/src/main/res/layout/activity_detail.xml" value="0.3752931978107897" />
+        <entry key="..\:/AndroidProject/Travel/app/src/main/res/layout/activity_edit_cuisine.xml" value="0.2269021739130435" />
         <entry key="..\:/AndroidProject/Travel/app/src/main/res/layout/activity_edit_location.xml" value="0.23143115942028986" />
         <entry key="..\:/AndroidProject/Travel/app/src/main/res/layout/activity_introductory.xml" value="0.264" />
         <entry key="..\:/AndroidProject/Travel/app/src/main/res/layout/activity_login.xml" value="0.2" />
         <entry key="..\:/AndroidProject/Travel/app/src/main/res/layout/activity_main.xml" value="0.136" />
         <entry key="..\:/AndroidProject/Travel/app/src/main/res/layout/activity_mien_bac.xml" value="0.25" />
+        <entry key="..\:/AndroidProject/Travel/app/src/main/res/layout/activity_ql_cuisine.xml" value="0.2269021739130435" />
         <entry key="..\:/AndroidProject/Travel/app/src/main/res/layout/activity_ql_location.xml" value="0.23143115942028986" />
         <entry key="..\:/AndroidProject/Travel/app/src/main/res/layout/activity_region.xml" value="0.25" />
         <entry key="..\:/AndroidProject/Travel/app/src/main/res/layout/activity_regions.xml" value="0.25" />

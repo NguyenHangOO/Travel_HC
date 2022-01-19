@@ -14,6 +14,7 @@ import androidx.fragment.app.Fragment;
 
 import com.example.travel.LoginActivity;
 import com.example.travel.MainActivity;
+import com.example.travel.QlCuisineActivity;
 import com.example.travel.QlLocationActivity;
 import com.example.travel.R;
 
@@ -31,6 +32,14 @@ public class ManageFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(getActivity(), QlLocationActivity.class);
+                startActivity(intent);
+            }
+        });
+        ImageView btnCuisine = (ImageView) mViewM.findViewById(R.id.btn_at);
+        btnCuisine.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getActivity(), QlCuisineActivity.class);
                 startActivity(intent);
             }
         });

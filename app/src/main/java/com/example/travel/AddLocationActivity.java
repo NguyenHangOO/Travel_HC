@@ -176,9 +176,7 @@ public class AddLocationActivity extends AppCompatActivity {
                     startActivity(intent);
                 } else {
                     Toast.makeText(AddLocationActivity.this, "Something went wrong!", Toast.LENGTH_SHORT).show();
-                    Intent intent = getIntent();
-                    finish();
-                    startActivity(intent);
+                    progressDialog.hide();
                 }
 
             }

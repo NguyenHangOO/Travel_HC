@@ -2,28 +2,17 @@ package com.example.travel;
 
 import java.io.Serializable;
 
-public class LocationAdmin implements Serializable {
+public class CuisineAdmin implements Serializable {
      private String resourceImage;
      private String title;
      private int id_item;
-     private String motaItem;
-     private int mien_id;
+     private int diadiem_id;
 
-
-    public LocationAdmin(String resourceImage, String title, int id_item, String motaItem, int mien_id) {
+    public CuisineAdmin(String resourceImage, String title, int id_item, int diadiem_id) {
         this.resourceImage = resourceImage;
         this.title = title;
         this.id_item = id_item;
-        this.motaItem = motaItem;
-        this.mien_id = mien_id;
-    }
-
-    public String getMotaItem() {
-        return motaItem;
-    }
-
-    public void setMotaItem(String motaItem) {
-        this.motaItem = motaItem;
+        this.diadiem_id = diadiem_id;
     }
 
     public String getResourceImage() {
@@ -50,14 +39,11 @@ public class LocationAdmin implements Serializable {
         this.id_item = id_item;
     }
 
-    public int getMien_id() {
-        return mien_id;
+    public int getDiadiem_id() {
+        return diadiem_id;
     }
 
-    public void setMien_id(int mien_id) {
-        this.mien_id = mien_id;
-    }
-    public String toString()  {
-        return this.getTitle();
+    public void setDiadiem_id(int diadiem_id) {
+        this.diadiem_id = diadiem_id;
     }
 }

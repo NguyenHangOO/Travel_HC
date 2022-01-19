@@ -179,9 +179,11 @@ public class LoginActivity extends AppCompatActivity {
                     if (response.equals("success")) {
                         tvStatus.setText("Successfully registered");
                         btnRegister.setClickable(false);
+                        progressDialog.hide();
 
                     } else if (response.equals("failure")) {
                         tvStatus.setText("Something went wrong!");
+                        progressDialog.hide();
                     }
                 }
             }, new Response.ErrorListener() {

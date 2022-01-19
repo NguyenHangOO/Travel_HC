@@ -1,16 +1,9 @@
 package com.example.travel;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
-
 import android.Manifest;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -27,6 +20,12 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -42,35 +41,31 @@ import java.io.InputStream;
 import java.util.HashMap;
 import java.util.Map;
 
-public class EditLocationActivity extends AppCompatActivity {
+public class EditCuisineActivity extends AppCompatActivity {
 
-    private Spinner spinnerRegions;
-    private EditText etNameE,etMotaE;
+    private EditText etNameE;
     private ImageView imgEdit;
-    private String MienId, id;
+    private String id;
     final int CODE_GALLERY_REQUEST = 999;
     Bitmap mbitmap;
-    private String tenMien;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_edit_location);
+        setContentView(R.layout.activity_edit_cuisine);
 
         Bundle bundle = getIntent().getExtras();
         if(bundle == null ){
             return;
         }
-        LocationAdmin locationAdmin = (LocationAdmin) bundle.get("object_location_admin");
-        etNameE = findViewById(R.id.et_tendd_e);
-        etMotaE = findViewById(R.id.et_mota_e);
-        imgEdit = findViewById(R.id.img_dd_e);
+        CuisineAdmin cuisineAdmin = (CuisineAdmin) bundle.get("object_cuisine_admin");
+        etNameE = findViewById(R.id.et_tenmon_e);
+        imgEdit = findViewById(R.id.img_cs_e);
 
-        etNameE.setText(locationAdmin.getTitle());
-        etMotaE.setText(locationAdmin.getMotaItem());
-        id = String.valueOf(locationAdmin.getId_item());
+        etNameE.setText(cuisineAdmin.getTitle());
+        id = String.valueOf(cuisineAdmin.getId_item());
 
-        ImageRequest imageRequest = new ImageRequest(locationAdmin.getResourceImage(), new Response.Listener<Bitmap>() {
+        ImageRequest imageRequest = new ImageRequest(cuisineAdmin.getResourceImage(), new Response.Listener<Bitmap>() {
             @Override
             public void onResponse(Bitmap response) {
                 imgEdit.setImageBitmap(response);
@@ -84,42 +79,18 @@ public class EditLocationActivity extends AppCompatActivity {
         RequestQueue requestQueue = Volley.newRequestQueue(this);
         requestQueue.add(imageRequest);
 
-        this.spinnerRegions = (Spinner) findViewById(R.id.spinner_regions_e);
-        Regison_Admin[] regison_admins = getRegison_admins();
-
-        ArrayAdapter<Regison_Admin> adapter = new ArrayAdapter<Regison_Admin>(this,
-                android.R.layout.simple_spinner_item,
-                regison_admins);
-
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-
-        this.spinnerRegions.setAdapter(adapter);
-
-        this.spinnerRegions.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                onItemSelectedHandler(parent, view, position, id);
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-
-            }
-        });
-
-        TextView btnDel = (TextView) findViewById(R.id.btn_del_dd);
+        TextView btnDel = (TextView) findViewById(R.id.btn_del_cs);
         btnDel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                AlertDialog.Builder mAlert = new AlertDialog.Builder(EditLocationActivity.this);
+                AlertDialog.Builder mAlert = new AlertDialog.Builder(EditCuisineActivity.this);
                 mAlert.setTitle("Notification");
                 mAlert.setIcon(R.drawable.ic_help);
-                mAlert.setMessage("Are you sure you want to delete location?");
+                mAlert.setMessage("Are you sure you want to delete cuisine?");
                 mAlert.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
-                        delLocation(view);
+                        delCuisine(view);
                     }
                 });
                 mAlert.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
@@ -132,66 +103,53 @@ public class EditLocationActivity extends AppCompatActivity {
             }
         });
 
-        TextView btn_editPhoto = (TextView) findViewById(R.id.btn_select_dd_e);
+        TextView btn_editPhoto = (TextView) findViewById(R.id.btn_select_cs_e);
         btn_editPhoto.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 ActivityCompat.requestPermissions(
-                        EditLocationActivity.this,
+                        EditCuisineActivity.this,
                         new String[] {Manifest.permission.READ_EXTERNAL_STORAGE},
                         CODE_GALLERY_REQUEST
                 );
             }
         });
 
-        TextView btnUp = (TextView) findViewById(R.id.btn_edit_dd);
+        TextView btnUp = (TextView) findViewById(R.id.btn_edit_cs);
         btnUp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                EditLocation(view);
+                EditCuisine(view);
             }
         });
 
-
-    }
-    private void onItemSelectedHandler(AdapterView<?> adapterView, View view, int position, long id) {
-        Adapter adapter = adapterView.getAdapter();
-        Regison_Admin regisonAdmin = (Regison_Admin) adapter.getItem(position);
-        MienId = String.valueOf(regisonAdmin.getId());
-    }
-    public static Regison_Admin[] getRegison_admins()  {
-        Regison_Admin rg1 = new Regison_Admin("Miền Bắc", 1);
-        Regison_Admin rg2 = new Regison_Admin("Miền Trung", 2);
-        Regison_Admin rg3 = new Regison_Admin("Miền Nam", 3);
-
-        return new Regison_Admin[] {rg1, rg2, rg3};
     }
 
-    public void  delLocation(View view){
-        String urldel = "https://travelhc.000webhostapp.com/dellocation.php";
+    public void  delCuisine(View view){
+        String urldel = "https://travelhc.000webhostapp.com/delcuisine.php";
         StringRequest stringRequest = new StringRequest(Request.Method.POST, urldel, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
                 if (response.equals("success")) {
-                    Toast.makeText(EditLocationActivity.this, "Delete location successfully", Toast.LENGTH_SHORT).show();
-                    Intent intent = new Intent(EditLocationActivity.this, QlLocationActivity.class);
+                    Toast.makeText(EditCuisineActivity.this, "Delete cuisine successfully", Toast.LENGTH_SHORT).show();
+                    Intent intent = new Intent(EditCuisineActivity.this, QlCuisineActivity.class);
                     startActivity(intent);
                     finish();
 
                 } else if (response.equals("failure")) {
-                    Toast.makeText(EditLocationActivity.this, "Delete location failed", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(EditCuisineActivity.this, "Delete cuisine failed", Toast.LENGTH_SHORT).show();
                 }
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Toast.makeText(EditLocationActivity.this, error.toString().trim(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(EditCuisineActivity.this, error.toString().trim(), Toast.LENGTH_SHORT).show();
             }
         }){
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String, String> data = new HashMap<>();
-                data.put("id_diadiem", id);
+                data.put("id_cuisine", id);
                 return data;
             }
         };
@@ -214,7 +172,7 @@ public class EditLocationActivity extends AppCompatActivity {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
     }
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        imgEdit = (ImageView) findViewById(R.id.img_dd_e);
+        imgEdit = (ImageView) findViewById(R.id.img_cs_e);
         if(requestCode == CODE_GALLERY_REQUEST && resultCode == RESULT_OK && data != null){
             Uri filPath = data.getData();
             try {
@@ -233,29 +191,28 @@ public class EditLocationActivity extends AppCompatActivity {
         bitmap.compress(Bitmap.CompressFormat.JPEG, 100, outputStream );
         byte[] imageBytes = outputStream.toByteArray();
 
-        String encodedImage = android.util.Base64.encodeToString(imageBytes, Base64.DEFAULT);
+        String encodedImage = Base64.encodeToString(imageBytes, Base64.DEFAULT);
         return  encodedImage;
     }
 
-    private void EditLocation(View view){
+    private void EditCuisine(View view){
         final ProgressDialog progressDialog = new ProgressDialog(this);
         progressDialog.setMessage("Uploading....");
         progressDialog.show();
 
-        String urluplt = "https://travelhc.000webhostapp.com/upLocation.php";
+        String urlupcs = "https://travelhc.000webhostapp.com/upCuisine.php";
 
-        String mNameE = ((EditText) findViewById(R.id.et_tendd_e)).getText().toString().trim();
-        String mMotaE = ((EditText) findViewById(R.id.et_mota_e)).getText().toString().trim();
-        StringRequest stringRequest = new StringRequest(Request.Method.POST, urluplt, new Response.Listener<String>() {
+        String mNameE = ((EditText) findViewById(R.id.et_tenmon_e)).getText().toString().trim();
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, urlupcs, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
                 if (!response.equals("failure")) {
-                    Toast.makeText(EditLocationActivity.this, "Successfully Edit Location", Toast.LENGTH_SHORT).show();
-                    Intent intent = new Intent(EditLocationActivity.this, QlLocationActivity.class);
+                    Toast.makeText(EditCuisineActivity.this, "Successfully Edit Location", Toast.LENGTH_SHORT).show();
+                    Intent intent = new Intent(EditCuisineActivity.this, QlCuisineActivity.class);
                     startActivity(intent);
                     finish();
                 } else {
-                    Toast.makeText(EditLocationActivity.this, "Something went wrong!", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(EditCuisineActivity.this, "Something went wrong!", Toast.LENGTH_SHORT).show();
                     progressDialog.hide();
                 }
 
@@ -263,7 +220,7 @@ public class EditLocationActivity extends AppCompatActivity {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError volleyError) {
-                Toast.makeText(EditLocationActivity.this, volleyError.toString().trim(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(EditCuisineActivity.this, volleyError.toString().trim(), Toast.LENGTH_SHORT).show();
             }
         }){
             @Nullable
@@ -276,14 +233,12 @@ public class EditLocationActivity extends AppCompatActivity {
                 } else {
                     params.put("img","");
                 }
-                params.put("tendiadiem",mNameE);
-                params.put("mota",mMotaE);
-                params.put("mien_id",MienId);
+                params.put("tenmon",mNameE);
                 params.put("id",id);
                 return params;
             }
         };
-        RequestQueue requestQueue = Volley.newRequestQueue(EditLocationActivity.this);
+        RequestQueue requestQueue = Volley.newRequestQueue(EditCuisineActivity.this);
         requestQueue.add(stringRequest);
     }
 }

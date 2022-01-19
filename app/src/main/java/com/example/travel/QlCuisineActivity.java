@@ -1,20 +1,19 @@
 package com.example.travel;
 
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.SearchView;
-import androidx.appcompat.widget.Toolbar;
-import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.app.SearchManager;
-import android.content.ClipData;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
+
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.SearchView;
+import androidx.appcompat.widget.Toolbar;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
@@ -32,30 +31,30 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-public class QlLocationActivity extends AppCompatActivity {
+public class QlCuisineActivity extends AppCompatActivity {
 
-    private RecyclerView rcvLocationql;
-    private LocationAdapterAdmin mLocationAdapterAdmin;
-    private List<LocationAdmin> listLocationAdmin = new ArrayList<>();
+    private RecyclerView rcvCuisineql;
+    private CuisineAdapterAdmin mCuisineAdapterAdmin;
+    private List<CuisineAdmin> listCuisineAdmin = new ArrayList<>();
 
     private SearchView searchView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_ql_location);
+        setContentView(R.layout.activity_ql_cuisine);
 
-        Toolbar toolbarR = findViewById(R.id.tb_admin);
-        toolbarR.setTitle("Manage Location");
+        Toolbar toolbarR = findViewById(R.id.tb_admin_cuisine);
+        toolbarR.setTitle("Manage Cuisine");
         setSupportActionBar(toolbarR);
 
-        getListAllLocationAdmin();
+        getListAllCuisineAdmin();
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
     }
 
-    private void getListAllLocationAdmin(){
-        String urlAll = "https://travelhc.000webhostapp.com/location_all.php";
+    private void getListAllCuisineAdmin(){
+        String urlAll = "https://travelhc.000webhostapp.com/cuisine_all.php";
         StringRequest stringRequest = new StringRequest(Request.Method.POST, urlAll, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
@@ -66,29 +65,28 @@ public class QlLocationActivity extends AppCompatActivity {
                         for(int i=0; i < obj.length(); i++){
                             JSONObject item = obj.getJSONObject(i);
                             String imgurl = item.getString("img");
-                            String ingten = item.getString("tendiadiem");
+                            String ingten = item.getString("tenmon");
                             int imgid = item.getInt("id");
-                            int mien_id = item.getInt("mien_id");
-                            String motaItem = item.getString("mota");
-                            listLocationAdmin.add(new LocationAdmin(imgurl,ingten,imgid,motaItem,mien_id));
+                            int diadiem_id = item.getInt("diadiem_id");
+                            listCuisineAdmin.add(new CuisineAdmin(imgurl,ingten,imgid,diadiem_id));
                         }
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
-                    rcvLocationql = findViewById(R.id.rev_allLocation_ql);
-                    mLocationAdapterAdmin = new LocationAdapterAdmin(QlLocationActivity.this);
-                    GridLayoutManager gridLayoutManager = new GridLayoutManager(QlLocationActivity.this, 1);
-                    rcvLocationql.setLayoutManager(gridLayoutManager);
-                    mLocationAdapterAdmin.setData(listLocationAdmin);
-                    rcvLocationql.setAdapter(mLocationAdapterAdmin);
+                    rcvCuisineql = findViewById(R.id.rev_allcuisine_ql);
+                    mCuisineAdapterAdmin = new CuisineAdapterAdmin(QlCuisineActivity.this);
+                    GridLayoutManager gridLayoutManager = new GridLayoutManager(QlCuisineActivity.this, 1);
+                    rcvCuisineql.setLayoutManager(gridLayoutManager);
+                    mCuisineAdapterAdmin.setData(listCuisineAdmin);
+                    rcvCuisineql.setAdapter(mCuisineAdapterAdmin);
                 } else {
-                    Toast.makeText(QlLocationActivity.this, "No data to view", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(QlCuisineActivity.this, "No data to view", Toast.LENGTH_SHORT).show();
                 }
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Toast.makeText(QlLocationActivity.this, error.toString().trim(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(QlCuisineActivity.this, error.toString().trim(), Toast.LENGTH_SHORT).show();
             }
         }){
             @Nullable
@@ -97,7 +95,7 @@ public class QlLocationActivity extends AppCompatActivity {
                 return super.getParams();
             }
         };
-        RequestQueue requestQueue = Volley.newRequestQueue(QlLocationActivity.this);
+        RequestQueue requestQueue = Volley.newRequestQueue(QlCuisineActivity.this);
         requestQueue.add(stringRequest);
     }
 
@@ -111,7 +109,7 @@ public class QlLocationActivity extends AppCompatActivity {
         menu.findItem(R.id.action_add).setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem menuItem) {
-                Intent intent = new Intent(QlLocationActivity.this, AddLocationActivity.class);
+                Intent intent = new Intent(QlCuisineActivity.this, AddCuisineActivity.class);
                 startActivity(intent);
                 return false;
             }
@@ -130,13 +128,13 @@ public class QlLocationActivity extends AppCompatActivity {
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
-                mLocationAdapterAdmin.getFilter().filter(query);
+                mCuisineAdapterAdmin.getFilter().filter(query);
                 return false;
             }
 
             @Override
             public boolean onQueryTextChange(String newText) {
-                mLocationAdapterAdmin.getFilter().filter(newText);
+                mCuisineAdapterAdmin.getFilter().filter(newText);
                 return false;
             }
         });
